@@ -1,7 +1,6 @@
 const path = require('path');
 const fs   = require('fs');
 
-// En Vercel, las entregas viven en /tmp (sistema de archivos efímero)
 const DELIVERABLES_FILE = '/tmp/deliverables.json';
 
 function ensureFile() {
@@ -13,7 +12,6 @@ function ensureFile() {
 module.exports = (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.setHeader('Content-Type', 'application/json');
 
   if (req.method === 'OPTIONS') {
     res.status(200).end();
@@ -23,8 +21,10 @@ module.exports = (req, res) => {
   try {
     ensureFile();
     const data = fs.readFileSync(DELIVERABLES_FILE, 'utf8');
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.status(200).send(data);
   } catch (err) {
-    res.status(200).json([]);
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.status(200).send('[]');
   }
 };

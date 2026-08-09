@@ -1,9 +1,3 @@
 {
-  "version": 2,
-  "routes": [
-    { "src": "/api/projects",     "dest": "/api/projects.js"     },
-    { "src": "/api/deliverables", "dest": "/api/deliverables.js" },
-    { "src": "/public/(.*)",      "dest": "/public/$1"           },
-    { "src": "/(.*)",             "dest": "/public/$1"           }
-  ]
+  "version": 2
 }
