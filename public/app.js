@@ -370,46 +370,53 @@ uploadForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   if (isUploading) return;
 
-  const projectId   = formProject.value.trim();
-  const studentName = formStudent.value.trim();
-  const title       = formTitle.value.trim();
-  const file        = formFile.files[0];
+  const projectId   = formProject ? formProject.value.trim() : '';
+  const studentName = formStudent ? formStudent.value.trim() : '';
+  const title       = formTitle ? formTitle.value.trim() : '';
+  const file        = formFile && formFile.files ? formFile.files[0] : null;
 
-  if (!projectId)   { showToast('Seleccione un anteproyecto.', 'error'); formProject.focus(); return; }
-  if (!studentName) { showToast('Ingrese el nombre del estudiante.', 'error'); formStudent.focus(); return; }
-  if (!title)       { showToast('Ingrese el título de la entrega.', 'error'); formTitle.focus(); return; }
+  if (!projectId)   { showToast('Seleccione un anteproyecto.', 'error'); return; }
+  if (!studentName) { showToast('Ingrese el nombre del estudiante.', 'error'); return; }
+  if (!title)       { showToast('Ingrese el título de la entrega.', 'error'); return; }
   if (!file)        { showToast('Seleccione un archivo.', 'error'); return; }
-  if (file.size > 50 * 1048576) { showToast('El archivo supera el límite de 50 MB.', 'error'); return; }
 
   setSubmitting(true);
   showProgress();
 
-  const fd = new FormData();
-  fd.append('projectId',   projectId);
-  fd.append('studentName', studentName);
-  fd.append('title',       title);
-  fd.append('comments',    formComments.value.trim());
-  fd.append('file',        file);
+  // Crear objeto local con Blob URL para previsualizar/descargar en el navegador
+  const fileUrl = URL.createObjectURL(file);
 
-  try {
-    const res  = await fetch('/api/deliverables-upload', { method: 'POST', body: fd });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+  const newDeliverable = {
+    id: 'del-' + Date.now(),
+    projectId: projectId,
+    studentName: studentName,
+    title: title,
+    comments: formComments ? formComments.value.trim() : '',
+    filename: file.name,
+    filePath: fileUrl,
+    sizeBytes: file.size,
+    uploadDate: new Date().toISOString()
+  };
 
+  setTimeout(() => {
     completeProgress();
-    allDeliverables.push(data);
+    allDeliverables.unshift(newDeliverable);
+
+    // Guardar en localStorage
+    try {
+      const saved = JSON.parse(localStorage.getItem('abp_deliverables') || '[]');
+      saved.unshift(newDeliverable);
+      localStorage.setItem('abp_deliverables', JSON.stringify(saved));
+    } catch (err) {}
+
     updateDeliverableStat();
     renderDeliverables();
 
     setTimeout(() => {
       closeUploadModal();
       showToast(`Entrega de «${studentName}» registrada correctamente.`, 'success');
-    }, 700);
-  } catch (err) {
-    hideProgress();
-    setSubmitting(false);
-    showToast('Error al registrar la entrega: ' + err.message, 'error');
-  }
+    }, 400);
+  }, 500);
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -583,9 +590,8 @@ $$('.tab-btn').forEach(btn => {
 // ══════════════════════════════════════════════════════════════════════════════
 async function loadDeliverables() {
   try {
-    const res = await fetch('/api/deliverables-list');
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    allDeliverables = await res.json();
+    const saved = JSON.parse(localStorage.getItem('abp_deliverables') || '[]');
+    allDeliverables = saved;
     updateDeliverableStat();
     renderDeliverables();
   } catch (err) {
@@ -741,16 +747,14 @@ function populateSelects(projects) {
 // ══════════════════════════════════════════════════════════════════════════════
 async function deleteDeliverable(id, title) {
   const ok = window.confirm(
-    `¿Confirma la eliminación de la entrega «${title}»?\n\nEsta acción también eliminará el archivo del servidor y no puede deshacerse.`
+    `¿Confirma la eliminación de la entrega «${title}»?\n\nEsta acción eliminará el archivo del navegador y no puede deshacerse.`
   );
   if (!ok) return;
 
   try {
-    const res  = await fetch(`/api/deliverables-delete?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
-
     allDeliverables = allDeliverables.filter(d => d.id !== id);
+    localStorage.setItem('abp_deliverables', JSON.stringify(allDeliverables));
+    
     updateDeliverableStat();
     renderDeliverables();
     showToast(`Entrega «${title}» eliminada correctamente.`, 'info');
