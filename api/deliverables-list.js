@@ -1,5 +1,4 @@
-const path = require('path');
-const fs   = require('fs');
+const fs = require('fs');
 
 const DELIVERABLES_FILE = '/tmp/deliverables.json';
 
@@ -12,19 +11,15 @@ function ensureFile() {
 module.exports = (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
 
   try {
     ensureFile();
     const data = fs.readFileSync(DELIVERABLES_FILE, 'utf8');
-    res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.status(200).send(data);
   } catch (err) {
-    res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.status(200).send('[]');
   }
 };

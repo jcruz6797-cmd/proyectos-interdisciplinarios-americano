@@ -5,9 +5,8 @@ const DELIVERABLES_FILE = '/tmp/deliverables.json';
 const UPLOADS_DIR       = '/tmp/uploads';
 
 function readDeliverables() {
-  try {
-    return JSON.parse(fs.readFileSync(DELIVERABLES_FILE, 'utf8'));
-  } catch { return []; }
+  try { return JSON.parse(fs.readFileSync(DELIVERABLES_FILE, 'utf8')); }
+  catch { return []; }
 }
 
 function saveDeliverables(data) {
@@ -22,27 +21,24 @@ module.exports = (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'DELETE') return res.status(405).json({ error: 'Método no permitido' });
 
-  // El ID viene de la URL: /api/deliverables/[id]
-  const { id } = req.query;
+  const id = req.query.id;
   if (!id) return res.status(400).json({ error: 'ID requerido.' });
 
   const all = readDeliverables();
   const target = all.find(d => d.id === id);
-
   if (!target) return res.status(404).json({ error: 'Entrega no encontrada.' });
 
-  // Eliminar archivo físico si existe
+  // Borrar archivo físico
   if (target.filePath) {
     try {
       const nameParam = new URL(target.filePath, 'http://localhost').searchParams.get('name');
       if (nameParam) {
-        const filePath = path.join(UPLOADS_DIR, path.basename(nameParam));
-        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+        const fp = path.join(UPLOADS_DIR, path.basename(nameParam));
+        if (fs.existsSync(fp)) fs.unlinkSync(fp);
       }
-    } catch (_) { /* archivo ya eliminado */ }
+    } catch (_) {}
   }
 
-  // Eliminar registro
   const filtered = all.filter(d => d.id !== id);
   saveDeliverables(filtered);
 

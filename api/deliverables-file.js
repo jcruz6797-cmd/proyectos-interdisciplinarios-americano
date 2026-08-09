@@ -5,13 +5,11 @@ const UPLOADS_DIR = '/tmp/uploads';
 
 module.exports = (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   const fileName = req.query.name;
   if (!fileName) return res.status(400).json({ error: 'Parámetro name requerido.' });
 
-  // Prevenir path traversal
   const safe = path.basename(fileName);
   const filePath = path.join(UPLOADS_DIR, safe);
 
@@ -26,11 +24,8 @@ module.exports = (req, res) => {
     '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     '.pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
     '.zip': 'application/zip',
-    '.png': 'image/png',
-    '.jpg': 'image/jpeg',
-    '.jpeg': 'image/jpeg',
-    '.gif': 'image/gif',
-    '.webp': 'image/webp',
+    '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
+    '.gif': 'image/gif', '.webp': 'image/webp',
   };
 
   res.setHeader('Content-Type', mimeTypes[ext] || 'application/octet-stream');

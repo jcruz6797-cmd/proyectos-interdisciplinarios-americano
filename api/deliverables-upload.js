@@ -13,9 +13,8 @@ function ensureDir() {
 
 function readDeliverables() {
   ensureDir();
-  try {
-    return JSON.parse(fs.readFileSync(DELIVERABLES_FILE, 'utf8'));
-  } catch { return []; }
+  try { return JSON.parse(fs.readFileSync(DELIVERABLES_FILE, 'utf8')); }
+  catch { return []; }
 }
 
 function saveDeliverables(data) {
@@ -40,47 +39,31 @@ module.exports = (req, res) => {
 
   const busboy = Busboy({
     headers: req.headers,
-    limits: { fileSize: 50 * 1024 * 1024 } // 50 MB
+    limits: { fileSize: 50 * 1024 * 1024 }
   });
 
-  busboy.on('field', (name, val) => {
-    fields[name] = val;
-  });
+  busboy.on('field', (name, val) => { fields[name] = val; });
 
   busboy.on('file', (name, stream, info) => {
-    const { filename, mimeType } = info;
-    fileName = filename;
+    fileName = info.filename;
     const chunks = [];
-
-    stream.on('data', (chunk) => {
-      chunks.push(chunk);
-      fileSize += chunk.length;
-    });
-
-    stream.on('end', () => {
-      fileData = Buffer.concat(chunks);
-    });
+    stream.on('data', (chunk) => { chunks.push(chunk); fileSize += chunk.length; });
+    stream.on('end', () => { fileData = Buffer.concat(chunks); });
   });
 
   busboy.on('finish', () => {
     if (!fields.projectId || !fields.studentName || !fields.title) {
-      return res.status(400).json({ error: 'Faltan campos obligatorios (projectId, studentName, title).' });
+      return res.status(400).json({ error: 'Faltan campos obligatorios.' });
     }
-
     if (!fileData || !fileName) {
       return res.status(400).json({ error: 'No se recibió ningún archivo.' });
     }
 
-    // Generar nombre único
     const id = crypto.randomUUID();
-    const ext = path.extname(fileName);
     const safeName = `${Date.now()}_${fileName.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
     const filePath = path.join(UPLOADS_DIR, safeName);
-
-    // Guardar archivo en /tmp
     fs.writeFileSync(filePath, fileData);
 
-    // Crear registro de entrega
     const deliverable = {
       id,
       projectId: fields.projectId,
@@ -88,12 +71,11 @@ module.exports = (req, res) => {
       title: fields.title,
       comments: fields.comments || '',
       filename: fileName,
-      filePath: `/api/deliverables/file?name=${encodeURIComponent(safeName)}`,
+      filePath: `/api/deliverables-file?name=${encodeURIComponent(safeName)}`,
       fileSize,
       uploadedAt: new Date().toISOString()
     };
 
-    // Guardar metadata
     const all = readDeliverables();
     all.push(deliverable);
     saveDeliverables(all);
@@ -102,15 +84,10 @@ module.exports = (req, res) => {
   });
 
   busboy.on('error', (err) => {
-    res.status(500).json({ error: 'Error al procesar el archivo: ' + err.message });
+    res.status(500).json({ error: 'Error al procesar: ' + err.message });
   });
 
   req.pipe(busboy);
 };
 
-// Vercel: desactivar el body parser nativo para permitir streaming de multipart
-module.exports.config = {
-  api: {
-    bodyParser: false
-  }
-};
+module.exports.config = { api: { bodyParser: false } };

@@ -392,7 +392,7 @@ uploadForm.addEventListener('submit', async (e) => {
   fd.append('file',        file);
 
   try {
-    const res  = await fetch('/api/deliverables/upload', { method: 'POST', body: fd });
+    const res  = await fetch('/api/deliverables-upload', { method: 'POST', body: fd });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
 
@@ -583,7 +583,7 @@ $$('.tab-btn').forEach(btn => {
 // ══════════════════════════════════════════════════════════════════════════════
 async function loadDeliverables() {
   try {
-    const res = await fetch('/api/deliverables');
+    const res = await fetch('/api/deliverables-list');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     allDeliverables = await res.json();
     updateDeliverableStat();
@@ -746,7 +746,7 @@ async function deleteDeliverable(id, title) {
   if (!ok) return;
 
   try {
-    const res  = await fetch(`/api/deliverables/${encodeURIComponent(id)}`, { method: 'DELETE' });
+    const res  = await fetch(`/api/deliverables-delete?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
 
