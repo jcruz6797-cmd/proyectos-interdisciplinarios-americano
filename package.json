@@ -2,11 +2,6 @@
   "name": "proyectos-interdisciplinarios-americano",
   "version": "1.0.0",
   "description": "Portal de Gestión de Anteproyectos Interdisciplinarios ABP — UE Particular Americano",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
-  },
   "type": "commonjs",
   "dependencies": {
     "busboy": "^1.6.0",
