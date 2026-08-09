@@ -1,0 +1,157 @@
+[
+  {
+    "id": "8vo-egb",
+    "level": "Octavo de EGB",
+    "sublevel": "Educación General Básica Superior",
+    "title": "Lógica de Datos: Investigación Estadística sobre Hábitos Digitales y Uso del Tiempo Libre",
+    "subjects": "Matemáticas + Informática",
+    "teachers": "Lic. Josué Cruz & Ing. Ángela Vinces",
+    "duration": "4 Semanas | Presupuesto $0",
+    "context": "En la comunidad escolar se desconoce cómo los estudiantes distribuyen su tiempo libre entre actividades académicas, recreativas y uso de pantallas, lo que dificulta tomar decisiones informadas sobre hábitos saludables.",
+    "challenge": "¿Cómo podemos clasificar y representar matemáticamente los hábitos digitales de nuestra comunidad escolar mediante lógica de conjuntos y hojas de cálculo para proponer una guía de uso eficiente del tiempo?",
+    "objective": "Investigar los patrones de uso del tiempo libre y herramientas digitales en la comunidad escolar mediante encuestas, lógica proposicional, conjuntos y tabulación en Google Sheets.",
+    "specificObjectives": [
+      "Investigativo: Diseñar y aplicar un instrumento de recolección de datos digitales (Google Forms) para diagnosticar hábitos.",
+      "Matemático-Técnico: Clasificar respuestas usando diagramas de Venn, conjuntos y números racionales en Google Sheets.",
+      "Producto: Elaborar un reporte estadístico digital y diagrama de flujo condicional recomendador."
+    ],
+    "product": "Reporte Estadístico Digital en Google Sheets + Diagrama de Flujo Lógico Recomendador",
+    "dcd": "M.4.1.1. Operaciones entre conjuntos (unión, intersección) / M.4.1.14. Números racionales / CD.4.1. Tabulación en Hojas de Cálculo / CD.4.2. Diagramas de flujo con condicionales lógicos.",
+    "weeklyProgress": [
+      {"week": "Semana 1", "task": "Definición de variables, diseño de Google Forms y aplicación de encuesta a la muestra escolar ($0 costo)."},
+      {"week": "Semana 2", "task": "Procesamiento en Google Sheets, formulación de proposiciones lógicas y Diagramas de Venn con números racionales."},
+      {"week": "Semana 3", "task": "Desarrollo algorítmico de diagrama de flujo condicional (SI... ENTONCES) en Diagrams.net o Google Drawings."},
+      {"week": "Semana 4", "task": "Exposición del diagnóstico estadístico a la comunidad escolar mediante panel digital."}
+    ],
+    "rubric": [
+      "1. Fase Investigativa y Datos (10-9): Diseña y aplica instrumentos rigurosos de recolección de datos.",
+      "2. Rigor Matemático (10-9): Aplica con exactitud las operaciones, fórmulas y algoritmos entre conjuntos.",
+      "3. Integración Tecnológica (10-9): Utiliza hojas de cálculo y diagramas de flujo de forma fluida y automatizada ($0 costo).",
+      "4. Producto y Sustentación (10-9): Producto completamente funcional, alcanzable y sustentado con claridad."
+    ]
+  },
+  {
+    "id": "9no-egb",
+    "level": "Noveno de EGB",
+    "sublevel": "Educación General Básica Superior",
+    "title": "Geometría y Fuerza: Investigación del Modelado Polinómico y Eficiencia Geométrica en Sistemas Tecnológicos",
+    "subjects": "Matemáticas + Robótica / Electrónica e Informática",
+    "teachers": "Lic. Josué Cruz & Ing. Ángela Vinces",
+    "duration": "4 Semanas | Presupuesto $0",
+    "context": "La eficiencia en dispositivos tecnológicos (como la adhesión de tóner en impresoras o el rendimiento de ruedas en mecanismos robóticos) depende de principios físicos expresados mediante geometría y fuerza electrostática.",
+    "challenge": "¿De qué manera las expresiones polinómicas y las propiedades geométricas de la circunferencia permiten modelar y simular el comportamiento de componentes electrónicos y mecánicos en plataformas de simulación libre?",
+    "objective": "Investigar la relación entre el modelado algebraico polinómico y la geometría del círculo aplicados a componentes electrónicos y mecánicos mediante simuladores virtuales.",
+    "specificObjectives": [
+      "Investigativo: Indagar los fundamentos del comportamiento de cargas eléctricas y relaciones métricas circulares.",
+      "Matemático-Técnico: Operar y factorizar polinomios representativos de fuerzas electrostáticas y calcular áreas/perímetros.",
+      "Producto: Construir una simulación virtual interactiva en Tinkercad Circuits e informe técnico algebraico."
+    ],
+    "product": "Modelo Interactivo de Simulación en Tinkercad Circuits + Informe de Modelado Algebraico-Geométrico",
+    "dcd": "M.4.1.24. Operación y factorización de polinomios / M.4.2.11. Perímetro y área del círculo / RB.4.1. Simulación de circuitos electrónicos y componentes mecánicos en Tinkercad.",
+    "weeklyProgress": [
+      {"week": "Semana 1", "task": "Búsqueda documental sobre la ley de cargas electrostáticas y geometría de componentes circulares/mecánicos."},
+      {"week": "Semana 2", "task": "Planteamiento polinómico de distancia y fuerza, factorización de expresiones y cálculos geométricos de área/perímetro."},
+      {"week": "Semana 3", "task": "Ensamblaje digital y simulación en Tinkercad Circuits, comparando valores calculados vs. simulados."},
+      {"week": "Semana 4", "task": "Sustentación del modelo interactivo y entrega del informe técnico algebraico."}
+    ],
+    "rubric": [
+      "1. Fase Investigativa y Datos (10-9): Fundamenta el problema técnico y físico con literatura científica escolar.",
+      "2. Rigor Matemático (10-9): Opera polinomios, algoritmos de factorización y geometría con exactitud.",
+      "3. Integración Tecnológica (10-9): Ensambla y simula componentes correctamente en Tinkercad Circuits.",
+      "4. Producto y Sustentación (10-9): Demuestra el funcionamiento del modelo virtual con claridad técnica."
+    ]
+  },
+  {
+    "id": "1ro-bgu",
+    "level": "Primero de BGU",
+    "sublevel": "Bachillerato General Unificado",
+    "title": "Emprendimiento Sostenible: Investigación de Mercado y Punto de Equilibrio mediante Funciones Lineales y Sistemas de Ecuaciones",
+    "subjects": "Matemáticas + Emprendimiento y Gestión / Informática",
+    "teachers": "Lic. Josué Cruz & Ing. Ángela Vinces",
+    "duration": "4 Semanas | Presupuesto $0",
+    "context": "La mayoría de los microemprendimientos locales fracasan en su primer año debido a la falta de análisis estadístico de la demanda y a la ausencia de un cálculo riguroso del punto de equilibrio entre ingresos y costos.",
+    "challenge": "¿Cómo podemos determinar la viabilidad financiera y el punto de equilibrio de un emprendimiento escolar sostenible combinando investigación de mercado digital con sistemas de ecuaciones lineales y análisis estadístico?",
+    "objective": "Investigar la viabilidad comercial de una propuesta de emprendimiento ecológico/social mediante recolección de datos primarios en Google Forms y resolución de sistemas de ecuaciones por la regla de Cramer en Excel.",
+    "specificObjectives": [
+      "Investigativo: Levantar un estudio de mercado digital para determinar hábitos de consumo y disposición de pago.",
+      "Matemático-Técnico: Formular funciones de Costo C(x)=mx+b e Ingreso I(x)=px, resolviendo por la Regla de Cramer.",
+      "Producto: Diseñar un modelo de negocio con un tablero de control financiero (Dashboard) automatizado en Excel."
+    ],
+    "product": "Dashboard Financiero en Excel con simulador de Punto de Equilibrio + Reporte de Estudio de Mercado",
+    "dcd": "M.5.1.5. Intersección gráfica de rectas / M.5.1.13. Regla de Cramer en sistemas 2x2 y 3x3 / M.5.3.1. Medidas de tendencia central / EG.5.3.1. Estudio de mercado / EG.5.4.1. Cálculo de punto de equilibrio.",
+    "weeklyProgress": [
+      {"week": "Semana 1", "task": "Definición del producto/servicio sostenible y levantamiento de encuesta en Google Forms a muestra de 50 personas."},
+      {"week": "Semana 2", "task": "Tabulación en Sheets, cálculo de media, mediana, moda y determinación de costos fijos (b) y variables (m)."},
+      {"week": "Semana 3", "task": "Programación del sistema de ecuaciones y método de Cramer en Excel con gráfica de Punto de Equilibrio."},
+      {"week": "Semana 4", "task": "Exposición del Pitch de Negocio y demostración en vivo del simulador en Excel."}
+    ],
+    "rubric": [
+      "1. Fase Investigativa y Datos (10-9): Diseña y aplica encuestas digitales rigurosas de estudio de mercado.",
+      "2. Rigor Matemático (10-9): Formula las ecuaciones lineales y aplica la regla de Cramer con exactitud.",
+      "3. Integración Tecnológica (10-9): Programa el Dashboard financiero automatizado en Excel/Sheets.",
+      "4. Producto y Sustentación (10-9): Demuestra la viabilidad financiera del proyecto en el pitch."
+    ]
+  },
+  {
+    "id": "2do-bgu",
+    "level": "Segundo de BGU",
+    "sublevel": "Bachillerato General Unificado",
+    "title": "Proyecciones del Futuro: Investigación del Crecimiento Exponencial y Modelación Financiera mediante Sucesiones y Series",
+    "subjects": "Matemáticas + Emprendimiento y Gestión / Informática",
+    "teachers": "Lic. Josué Cruz & Ing. Ángela Vinces",
+    "duration": "4 Semanas | Presupuesto $0",
+    "context": "La falta de educación financiera sobre el impacto del interés compuesto y el desconocimiento del comportamiento de los fenómenos de crecimiento exponencial (como la inflación o bioprocesos) afectan la planificación a largo plazo.",
+    "challenge": "¿Cómo influyen los modelos exponenciales y las progresiones geométricas en la proyección del valor del dinero en el tiempo y el crecimiento poblacional, y cómo podemos automatizar estos cálculos en herramientas informáticas?",
+    "objective": "Investigar el comportamiento del crecimiento exponencial y las series financieras (interés simple y compuesto) mediante análisis de datos reales y plantillas automatizadas en Excel.",
+    "specificObjectives": [
+      "Investigativo: Recopilar datos históricos sobre tasas de interés bancario o crecimiento poblacional.",
+      "Matemático-Técnico: Formular y resolver ecuaciones exponenciales/logarítmicas y progresiones geométricas aplicadas a amortizaciones.",
+      "Producto: Crear un simulador financiero de inversión y amortización interactivo en Excel/Google Sheets."
+    ],
+    "product": "Plantilla Automatizada de Simulaciones Financieras y Crecimiento Exponencial en Excel",
+    "dcd": "M.5.1.76. Funciones exponenciales y logarítmicas / M.5.1.55. Progresiones aritméticas y geométricas en finanzas / EG.5.4.3. Herramientas informáticas de proyección financiera.",
+    "weeklyProgress": [
+      {"week": "Semana 1", "task": "Consulta de tasas de interés bancario activas y pasivas en entidades de Ecuador (datos públicos libres)."},
+      {"week": "Semana 2", "task": "Desarrollo de fórmulas A(t)=P(1+r)^t, despejes logarítmicos y comparación de interés simple vs. compuesto."},
+      {"week": "Semana 3", "task": "Construcción de la plantilla interactiva en Excel con tablas de amortización en métodos Francés y Alemán."},
+      {"week": "Semana 4", "task": "Presentación del simulador y entrega de la guía digital de educación financiera."}
+    ],
+    "rubric": [
+      "1. Fase Investigativa y Datos (10-9): Recopila datos financieros o poblacionales reales con precisión.",
+      "2. Rigor Matemático (10-9): Resuelve modelos exponenciales, logaritmos y series geométricas correctamente.",
+      "3. Integración Tecnológica (10-9): Automatiza tablas de amortización e interés compuesto en Excel.",
+      "4. Producto y Sustentación (10-9): Sustenta el simulador financiero proponiendo decisiones informadas."
+    ]
+  },
+  {
+    "id": "3ro-bgu",
+    "level": "Tercero de BGU",
+    "sublevel": "Bachillerato General Unificado",
+    "title": "Optimización y Razones de Cambio: Investigación del Rendimiento Marginal y Simulación Física de Procesos Continuos",
+    "subjects": "Matemáticas + Informática / Emprendimiento y Gestión",
+    "teachers": "Lic. Josué Cruz & Ing. Ángela Vinces",
+    "duration": "4 Semanas | Presupuesto $0",
+    "context": "En los procesos productivos y tecnológicos, maximizar ganancias, minimizar el uso de materia prima o determinar la velocidad instantánea de un sistema mecánico requiere del cálculo diferencial.",
+    "challenge": "¿De qué manera el cálculo diferencial y la interpretación de la primera y segunda derivada permiten resolver problemas de optimización de recursos y simular tasas de cambio instantáneas en modelos informáticos interactivos?",
+    "objective": "Investigar aplicaciones reales del cálculo diferencial en la optimización de magnitudes físicas y económicas mediante funciones derivables y plantillas interactivas en GeoGebra o Excel.",
+    "specificObjectives": [
+      "Investigativo: Indagar casos reales de producción o cinemática para hallar valores máximos, mínimos o razones de cambio.",
+      "Matemático-Técnico: Aplicar reglas de derivación, criterios de 1ra y 2da derivada y diferenciales para puntos críticos.",
+      "Producto: Desarrollar una plantilla dinámica interactiva en GeoGebra/Excel que evalúe y grafique funciones y óptimos."
+    ],
+    "product": "Applet/Plantilla Dinámica en GeoGebra/Excel de Optimización y Razón de Cambio + Informe de Investigación Técnica",
+    "dcd": "M.5.1.47. Cálculo de derivadas básicas / M.5.1.52. Aplicaciones reales de optimización y razón de cambio con TIC / CD.5.2. Modelos interactivos en GeoGebra / EG.5.5.3. Rendimiento marginal de recursos.",
+    "weeklyProgress": [
+      {"week": "Semana 1", "task": "Selección de un problema de optimización real (dimensiones de envase reciclado para maximizar volumen o costo marginal)."},
+      {"week": "Semana 2", "task": "Planteamiento de función objetivo, cálculo de primera derivada f'(x)=0 y validación con segunda derivada f''(x)."},
+      {"week": "Semana 3", "task": "Programación del modelo en GeoGebra/Excel visualizando en tiempo real la recta tangente y puntos óptimos."},
+      {"week": "Semana 4", "task": "Exposición técnica del proyecto y prueba en vivo de la plantilla dinámica interactiva."}
+    ],
+    "rubric": [
+      "1. Fase Investigativa y Datos (10-9): Formula y fundamenta el problema de optimización en un contexto real.",
+      "2. Rigor Matemático (10-9): Aplica reglas de derivación, puntos críticos y criterios de 1ra y 2da derivada sin errores.",
+      "3. Integración Tecnológica (10-9): Desarrolla la plantilla o applet dinámico funcional en GeoGebra o Excel.",
+      "4. Producto y Sustentación (10-9): Realiza la prueba en vivo del modelo interactivo sustentando sus resultados."
+    ]
+  }
+]

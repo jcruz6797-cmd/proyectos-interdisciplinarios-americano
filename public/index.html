@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portal de Gestión de Anteproyectos Interdisciplinarios ABP — Unidad Educativa Particular Americano. Administración de entregas, cronogramas y rúbricas de evaluación por nivel educativo." />
+  <title>Portal ABP — UE Particular «Americano»</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏫</text></svg>" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════
+       CABECERA INSTITUCIONAL CLARA
+  ══════════════════════════════════════════════════════ -->
+  <header class="header" role="banner">
+    <div class="header-inner">
+      <div class="header-brand">
+        <div class="brand-emblem" aria-hidden="true">🏫</div>
+        <div class="brand-text">
+          <div class="brand-school">UE Particular «Americano»</div>
+          <div class="brand-portal">Portal de Gestión de Anteproyectos Interdisciplinarios (ABP)</div>
+          <div class="brand-teachers">Lic. Josué Cruz &amp; Ing. Ángela Vinces</div>
+        </div>
+      </div>
+      <button id="btn-open-upload-header" class="btn btn-primary" aria-label="Abrir formulario de subida de entrega">
+        📤 Subir Entrega
+      </button>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════════
+       BANNER HERO CLARO
+  ══════════════════════════════════════════════════════ -->
+  <section class="hero" aria-label="Resumen académico del programa">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-tag">
+          <span aria-hidden="true">📚</span>
+          Aprendizaje Basado en Proyectos · Período 2024–2025
+        </div>
+        <h1 class="hero-title">
+          Anteproyectos <span>Interdisciplinarios</span><br />
+          de Matemáticas Aplicadas
+        </h1>
+        <p class="hero-desc">
+          Cinco propuestas académicas que integran Matemáticas con Informática, Robótica y Emprendimiento,
+          diseñadas para el desarrollo de destrezas con criterio de desempeño (DCD) establecidas por el
+          Ministerio de Educación del Ecuador.
+        </p>
+      </div>
+      <div class="hero-stats" role="list" aria-label="Estadísticas del programa">
+        <div class="stat-box" role="listitem">
+          <div class="stat-num blue" id="stat-projects">5</div>
+          <div class="stat-lbl">Anteproyectos ABP</div>
+        </div>
+        <div class="stat-box" role="listitem">
+          <div class="stat-num amber">4</div>
+          <div class="stat-lbl">Semanas de trabajo</div>
+        </div>
+        <div class="stat-box" role="listitem">
+          <div class="stat-num green">$0</div>
+          <div class="stat-lbl">Presupuesto</div>
+        </div>
+        <div class="stat-box" role="listitem">
+          <div class="stat-num blue" id="stat-deliverables">0</div>
+          <div class="stat-lbl">Entregas recibidas</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       CONTENIDO PRINCIPAL
+  ══════════════════════════════════════════════════════ -->
+  <main class="main" id="main-content">
+
+    <!-- ── Proyectos ──────────────────────────────────── -->
+    <section aria-labelledby="projects-heading">
+      <div class="section-header">
+        <h2 class="section-title" id="projects-heading">Anteproyectos por nivel educativo</h2>
+      </div>
+
+      <!-- Pestañas de filtro -->
+      <nav class="tabs" role="tablist" aria-label="Filtrar anteproyectos por nivel">
+        <button class="tab-btn active" role="tab" aria-selected="true"  data-filter="all"     id="tab-all">Todos</button>
+        <button class="tab-btn"        role="tab" aria-selected="false" data-filter="8vo-egb" id="tab-8vo">8.º EGB</button>
+        <button class="tab-btn"        role="tab" aria-selected="false" data-filter="9no-egb" id="tab-9no">9.º EGB</button>
+        <button class="tab-btn"        role="tab" aria-selected="false" data-filter="1ro-bgu" id="tab-1ro">1.º BGU</button>
+        <button class="tab-btn"        role="tab" aria-selected="false" data-filter="2do-bgu" id="tab-2do">2.º BGU</button>
+        <button class="tab-btn"        role="tab" aria-selected="false" data-filter="3ro-bgu" id="tab-3ro">3.º BGU</button>
+      </nav>
+
+      <!-- Grid de tarjetas -->
+      <div class="projects-grid" id="projects-grid" role="list" aria-label="Lista de anteproyectos">
+        <div class="empty-state" id="projects-loading">
+          <div class="empty-icon">⏳</div>
+          <div class="empty-title">Cargando anteproyectos…</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Entregas ───────────────────────────────────── -->
+    <section class="deliverables-section" aria-labelledby="deliverables-heading">
+      <div class="section-header">
+        <h2 class="section-title" id="deliverables-heading">Entregas recibidas</h2>
+        <button id="btn-open-upload-deliverables" class="btn btn-secondary btn-sm" aria-label="Registrar nueva entrega">
+          📤 Nueva entrega
+        </button>
+      </div>
+
+      <!-- Barra de herramientas -->
+      <div class="deliverables-toolbar">
+        <div class="search-box" role="search">
+          <span aria-hidden="true">🔍</span>
+          <input
+            type="search"
+            id="search-student"
+            placeholder="Buscar por nombre de estudiante…"
+            aria-label="Buscar entregas por nombre de estudiante"
+            autocomplete="off"
+          />
+        </div>
+        <label for="filter-deliverables" class="sr-only">Filtrar por proyecto</label>
+        <select id="filter-deliverables" class="filter-select" aria-label="Filtrar entregas por proyecto">
+          <option value="all">Todos los proyectos</option>
+        </select>
+        <span class="deliverables-count" id="deliverables-count" aria-live="polite"></span>
+      </div>
+
+      <div id="deliverables-container">
+        <div class="deliverables-table-wrapper">
+          <div class="empty-state" id="deliverables-empty">
+            <div class="empty-icon">📭</div>
+            <div class="empty-title">Aún no se han registrado entregas</div>
+            <div class="empty-sub">Utilice el botón «Subir Entrega» para registrar la primera.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ══════════════════════════════════════════════════════
+       MODAL — Guía y Avances del Anteproyecto
+  ══════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="guide-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="guide-modal-title">
+    <div class="modal modal-lg" id="guide-modal">
+      <div class="modal-header">
+        <div class="modal-title" id="guide-modal-title">
+          <span aria-hidden="true">📘</span>
+          <div>
+            <span id="guide-modal-level"></span>
+            <small id="guide-modal-subtitle"></small>
+          </div>
+        </div>
+        <button class="modal-close" id="guide-modal-close" aria-label="Cerrar guía del anteproyecto">✕</button>
+      </div>
+      <div class="modal-body" id="guide-modal-body">
+        <!-- Contenido generado dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       MODAL — Subir Entrega
+  ══════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="upload-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="upload-modal-title">
+    <div class="modal modal-sm" id="upload-modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="upload-modal-title">
+          <span aria-hidden="true">📤</span>
+          Registrar entrega de anteproyecto
+        </h3>
+        <button class="modal-close" id="upload-modal-close" aria-label="Cerrar formulario de entrega">✕</button>
+      </div>
+
+      <form id="upload-form" novalidate>
+        <div class="modal-body">
+
+          <div class="form-group">
+            <label class="form-label" for="form-project">
+              Anteproyecto <span aria-hidden="true">*</span>
+            </label>
+            <select class="form-control" id="form-project" name="projectId" required aria-required="true">
+              <option value="">— Seleccione un anteproyecto —</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="form-student">
+              Nombre del estudiante <span aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="form-student"
+              name="studentName"
+              placeholder="Ej.: María García"
+              required
+              aria-required="true"
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="form-title">
+              Título de la entrega <span aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="form-title"
+              name="title"
+              placeholder="Ej.: Fase 2 — Diagramas de Venn"
+              required
+              aria-required="true"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="form-comments">Observaciones</label>
+            <textarea
+              class="form-control"
+              id="form-comments"
+              name="comments"
+              rows="2"
+              placeholder="Comentarios del docente o del estudiante…"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="form-file">
+              Archivo <span aria-hidden="true">*</span>
+            </label>
+            <div class="file-drop" id="file-drop-zone">
+              <input
+                type="file"
+                id="form-file"
+                name="file"
+                required
+                aria-required="true"
+                aria-describedby="file-drop-help"
+              />
+              <div class="file-drop-icon" aria-hidden="true">📁</div>
+              <div class="file-drop-text">Arrastra tu archivo aquí o haz clic para seleccionarlo</div>
+              <div class="file-drop-sub" id="file-drop-help">PDF, DOCX, XLSX, PPTX, ZIP · Máximo 50 MB</div>
+              <div class="file-selected" id="file-selected-name" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <div class="upload-progress" id="upload-progress" aria-live="polite">
+            <div class="progress-label" id="progress-label">Subiendo archivo…</div>
+            <div class="progress-wrap">
+              <div class="progress-fill" id="progress-fill"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" id="upload-modal-cancel">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="submit-btn" aria-label="Enviar entrega">
+            <span id="submit-icon" aria-hidden="true">📤</span>
+            <span id="submit-text">Registrar entrega</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       MODAL — Previsualizador de archivos
+  ══════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="preview-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="preview-modal-title">
+    <div class="modal modal-xl" id="preview-modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="preview-modal-title">
+          <span aria-hidden="true">👁️</span>
+          <div>
+            <span id="preview-modal-filename">Visualización de entrega</span>
+            <small id="preview-modal-student"></small>
+          </div>
+        </h3>
+        <div style="display:flex;gap:.5rem;align-items:center;">
+          <a id="preview-download-link" class="btn btn-secondary btn-sm" download aria-label="Descargar archivo">⬇ Descargar</a>
+          <button class="modal-close" id="preview-modal-close" aria-label="Cerrar visualización">✕</button>
+        </div>
+      </div>
+      <div class="modal-body" style="padding:.75rem 1rem;">
+        <div class="preview-container" id="preview-container" aria-label="Visualización del documento">
+          <!-- Contenido generado dinámicamente -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div class="toast-container" id="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
