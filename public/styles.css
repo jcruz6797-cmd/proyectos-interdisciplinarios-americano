@@ -1042,3 +1042,77 @@ select.form-control {
   .tab-btn      { padding: .38rem .7rem; font-size: .75rem; }
   .brand-portal { font-size: .85rem; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   GUÍA PASO A PASO PARA EL ESTUDIANTE
+   ══════════════════════════════════════════════════════════════ */
+
+.student-guide-section {
+  background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
+  border: 2px solid #bbf7d0;
+  border-radius: var(--r-lg);
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.student-guide-title {
+  color: #065f46 !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.student-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+.student-step {
+  background: #ffffff;
+  border-radius: var(--r);
+  border-left: 4px solid #2563eb;
+  box-shadow: 0 2px 8px rgba(37,99,235,.08);
+  overflow: hidden;
+  transition: box-shadow .2s;
+}
+
+.student-step:hover {
+  box-shadow: 0 4px 16px rgba(37,99,235,.14);
+}
+
+.student-step:nth-child(1) { border-left-color: #2563eb; }
+.student-step:nth-child(2) { border-left-color: #7c3aed; }
+.student-step:nth-child(3) { border-left-color: #0891b2; }
+.student-step:nth-child(4) { border-left-color: #059669; }
+
+.student-step-header {
+  padding: .6rem 1rem .4rem;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  color: #1e293b;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.student-step:nth-child(1) .student-step-header { background: #eff6ff; color: #1e40af; }
+.student-step:nth-child(2) .student-step-header { background: #f5f3ff; color: #5b21b6; }
+.student-step:nth-child(3) .student-step-header { background: #ecfeff; color: #0e7490; }
+.student-step:nth-child(4) .student-step-header { background: #ecfdf5; color: #065f46; }
+
+.student-step-body {
+  padding: .7rem 1rem .8rem;
+  font-size: .875rem;
+  line-height: 1.65;
+  color: #334155;
+}
+
+@media (max-width: 600px) {
+  .student-guide-section { padding: 1rem; }
+  .student-step-header   { font-size: .73rem; }
+  .student-step-body     { font-size: .82rem; }
+}
+

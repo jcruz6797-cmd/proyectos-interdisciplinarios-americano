@@ -175,7 +175,31 @@ function openGuideModal(project) {
       ${esc(r)}
     </li>`).join('');
 
+  // Guía del Estudiante paso a paso
+  const studentGuideHtml = (project.studentGuide || []).map((step, i) => {
+    // Separar el prefijo "📌 PASO N (Semana N - Título):" del cuerpo
+    const match = step.match(/^(📌 PASO \d+ \([^)]+\)):\s*(.+)$/s);
+    const header = match ? match[1] : `📌 PASO ${i + 1}`;
+    const body   = match ? match[2] : step;
+    return `
+      <div class="student-step" role="listitem">
+        <div class="student-step-header">${esc(header)}</div>
+        <div class="student-step-body">${esc(body)}</div>
+      </div>`;
+  }).join('');
+
   guideModalBody.innerHTML = `
+    <!-- ★ Guía Paso a Paso para el Estudiante -->
+    ${studentGuideHtml ? `
+    <div class="guide-section student-guide-section" aria-label="Guía paso a paso para el estudiante">
+      <div class="guide-section-title student-guide-title">
+        <span aria-hidden="true">💡</span> Guía Paso a Paso para el Estudiante
+      </div>
+      <div class="student-steps-list" role="list">
+        ${studentGuideHtml}
+      </div>
+    </div>` : ''}
+
     <!-- Objetivo -->
     <div class="guide-section">
       <div class="guide-section-title">
