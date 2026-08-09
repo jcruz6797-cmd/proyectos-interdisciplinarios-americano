@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/server.js" },
-    { "source": "/uploads/(.*)", "destination": "/server.js" },
-    { "source": "/(.*)", "destination": "/public/$1" }
+  "routes": [
+    { "src": "/api/projects",      "dest": "/api/projects.js"     },
+    { "src": "/api/deliverables",  "dest": "/api/deliverables.js" },
+    { "src": "/(.*)",              "dest": "/public/$1"           }
   ]
 }
