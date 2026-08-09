@@ -10,21 +10,33 @@ module.exports = (req, res) => {
     return;
   }
 
-  // En Vercel, __dirname apunta a /var/task/api/
-  // data/projects.json está en /var/task/data/projects.json
-  const filePath = path.join(__dirname, '..', 'data', 'projects.json');
+  // Buscar projects.json: primero en data/, luego en raíz
+  const candidates = [
+    path.join(__dirname, '..', 'data', 'projects.json'),
+    path.join(process.cwd(), 'data', 'projects.json'),
+    path.join(__dirname, '..', 'projects.json'),
+    path.join(process.cwd(), 'projects.json'),
+  ];
 
-  try {
-    const data = fs.readFileSync(filePath, 'utf8');
+  let data = null;
+  let usedPath = '';
+  for (const filePath of candidates) {
+    try {
+      if (fs.existsSync(filePath)) {
+        data = fs.readFileSync(filePath, 'utf8');
+        usedPath = filePath;
+        break;
+      }
+    } catch (_) { /* siguiente */ }
+  }
+
+  if (data) {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.status(200).send(data);
-  } catch (err) {
+  } else {
     res.status(500).json({
       error: 'No se encontró projects.json',
-      path: filePath,
-      cwd: process.cwd(),
-      __dirname,
-      message: err.message
+      candidates
     });
   }
 };
