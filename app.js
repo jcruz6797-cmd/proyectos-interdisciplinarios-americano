@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════
    UE Particular «Americano» — Portal ABP
-   app.js  |  Lógica de cliente (vanilla JS)
+   app.js  |  Lógica de cliente (100% Estático y Funcional)
    ═══════════════════════════════════════════════════════════ */
 
 'use strict';
@@ -30,7 +30,7 @@ const guideModalSub   = $('#guide-modal-subtitle');
 const guideModalBody  = $('#guide-modal-body');
 const guideModalClose = $('#guide-modal-close');
 
-const uploadBackdrop  = $('#upload-modal-backdrop');
+const uploadBackdrop   = $('#upload-modal-backdrop');
 const uploadModalClose = $('#upload-modal-close');
 const uploadModalCancel = $('#upload-modal-cancel');
 
@@ -73,7 +73,7 @@ function showToast(message, type = 'info', duration = 4000) {
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
   toast.innerHTML = `<span aria-hidden="true">${icons[type]}</span>${message}`;
-  toastContainer.appendChild(toast);
+  if (toastContainer) toastContainer.appendChild(toast);
   setTimeout(() => {
     toast.style.transition = 'opacity .3s, transform .3s';
     toast.style.opacity = '0';
@@ -83,7 +83,7 @@ function showToast(message, type = 'info', duration = 4000) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// ESCAPE HTML
+// ESCAPE HTML & FORMATO
 // ══════════════════════════════════════════════════════════════════════════════
 function esc(str) {
   if (str == null) return '';
@@ -95,9 +95,6 @@ function esc(str) {
     .replace(/'/g, '&#39;');
 }
 
-// ══════════════════════════════════════════════════════════════════════════════
-// UTILIDADES
-// ══════════════════════════════════════════════════════════════════════════════
 function formatBytes(b) {
   if (!b) return '—';
   if (b < 1024)        return `${b} B`;
@@ -125,39 +122,38 @@ function getFileType(filename) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// MODAL HELPER — abrir / cerrar genérico
+// MODALES
 // ══════════════════════════════════════════════════════════════════════════════
 function openBackdrop(backdrop) {
+  if (!backdrop) return;
   backdrop.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
 function closeBackdrop(backdrop) {
+  if (!backdrop) return;
   backdrop.classList.remove('open');
-  // Solo restaurar scroll si ningún otro modal está abierto
   if (!document.querySelector('.modal-backdrop.open')) {
     document.body.style.overflow = '';
   }
 }
 
-// Cerrar con Escape
 document.addEventListener('keydown', (e) => {
   if (e.key !== 'Escape') return;
-  // Cierra de más reciente a más antiguo
-  if (previewBackdrop.classList.contains('open')) { closePreviewModal(); return; }
-  if (guideBackdrop.classList.contains('open'))   { closeGuideModal();   return; }
-  if (uploadBackdrop.classList.contains('open'))  { closeUploadModal();  return; }
+  if (previewBackdrop && previewBackdrop.classList.contains('open')) { closePreviewModal(); return; }
+  if (guideBackdrop && guideBackdrop.classList.contains('open'))     { closeGuideModal();   return; }
+  if (uploadBackdrop && uploadBackdrop.classList.contains('open'))   { closeUploadModal();  return; }
 });
 
-// Cerrar al click fuera
 [guideBackdrop, uploadBackdrop, previewBackdrop].forEach(bd => {
-  bd.addEventListener('click', (e) => { if (e.target === bd) closeBackdrop(bd); });
+  if (bd) bd.addEventListener('click', (e) => { if (e.target === bd) closeBackdrop(bd); });
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
 // MODAL — GUÍA Y AVANCES
 // ══════════════════════════════════════════════════════════════════════════════
 function openGuideModal(project) {
+  if (!guideModalLevel) return;
   guideModalLevel.textContent = `${project.level} — ${project.title}`;
   guideModalSub.textContent   = project.subjects;
 
@@ -176,95 +172,49 @@ function openGuideModal(project) {
     </li>`).join('');
 
   guideModalBody.innerHTML = `
-    <!-- Objetivo -->
     <div class="guide-section">
-      <div class="guide-section-title">
-        <span aria-hidden="true">🎯</span> Objetivo General
-      </div>
-      <div class="guide-objective">${esc(project.objective)}</div>
+      <div class="guide-section-title">🎯 Objetivo General</div>
+      <div class="guide-objective">${esc(project.objective || project.challenge)}</div>
     </div>
-
-    <!-- Reto central -->
     <div class="guide-section">
-      <div class="guide-section-title">
-        <span aria-hidden="true">❓</span> Pregunta Problematizadora
-      </div>
+      <div class="guide-section-title">❓ Pregunta Reto Investigativa</div>
       <div class="guide-objective" style="font-style:italic;">${esc(project.challenge)}</div>
     </div>
-
-    <!-- DCD -->
-    <div class="guide-section">
-      <div class="guide-section-title">
-        <span aria-hidden="true">📋</span> Destrezas con Criterio de Desempeño (DCD)
-      </div>
+    ${project.dcd ? `<div class="guide-section">
+      <div class="guide-section-title">📋 Destrezas (DCD)</div>
       <div class="guide-dcd">${esc(project.dcd)}</div>
-    </div>
-
-    <!-- Cronograma -->
+    </div>` : ''}
     <div class="guide-section">
-      <div class="guide-section-title">
-        <span aria-hidden="true">📅</span> Cronograma de Avances
-      </div>
-      <div style="border:1.5px solid var(--border);border-radius:var(--r-sm);overflow:hidden;">
-        <table class="weekly-table" aria-label="Cronograma semanal del proyecto">
+      <div class="guide-section-title">📅 Cronograma de Avances (4 Semanas)</div>
+      <div style="border:1.5px solid var(--border,#e2e8f0);border-radius:8px;overflow:hidden;">
+        <table class="weekly-table" style="width:100%;border-collapse:collapse;">
           <thead>
-            <tr>
-              <th scope="col" style="width:140px">Semana</th>
-              <th scope="col">Actividad / Producto esperado</th>
+            <tr style="background:#f8fafc;text-align:left;">
+              <th style="padding:8px 12px;width:120px">Semana</th>
+              <th style="padding:8px 12px">Actividad Requerida</th>
             </tr>
           </thead>
-          <tbody>
-            ${weeksHtml}
-          </tbody>
+          <tbody>${weeksHtml}</tbody>
         </table>
       </div>
     </div>
-
-    <!-- Rúbrica -->
     <div class="guide-section">
-      <div class="guide-section-title">
-        <span aria-hidden="true">📊</span> Rúbrica de Evaluación
-      </div>
-      <ul class="rubric-list" aria-label="Criterios de evaluación">
-        ${rubricHtml}
-      </ul>
-    </div>
-
-    <!-- Docentes y duración -->
-    <div class="guide-section" style="border-top:1px solid var(--border-light);padding-top:1rem;">
-      <div style="display:flex;gap:1.5rem;flex-wrap:wrap;">
-        <div>
-          <div class="card-product-label">Docentes responsables</div>
-          <div style="font-size:.875rem;font-weight:600;color:var(--ink)">${esc(project.teachers)}</div>
-        </div>
-        <div>
-          <div class="card-product-label">Duración / Recursos</div>
-          <div style="font-size:.875rem;font-weight:600;color:var(--ink)">${esc(project.duration)}</div>
-        </div>
-        <div>
-          <div class="card-product-label">Producto final</div>
-          <div style="font-size:.875rem;font-weight:600;color:var(--ink)">${esc(project.product)}</div>
-        </div>
-      </div>
+      <div class="guide-section-title">📊 Rúbrica de Evaluación</div>
+      <ul class="rubric-list">${rubricHtml}</ul>
     </div>`;
 
   openBackdrop(guideBackdrop);
-  setTimeout(() => guideModalClose.focus(), 280);
 }
 
 function closeGuideModal() { closeBackdrop(guideBackdrop); }
-
-guideModalClose.addEventListener('click', closeGuideModal);
+if (guideModalClose) guideModalClose.addEventListener('click', closeGuideModal);
 
 // ══════════════════════════════════════════════════════════════════════════════
 // MODAL — SUBIR ENTREGA
 // ══════════════════════════════════════════════════════════════════════════════
 function openUploadModal(preselectedId = null) {
-  if (preselectedId) formProject.value = preselectedId;
+  if (preselectedId && formProject) formProject.value = preselectedId;
   openBackdrop(uploadBackdrop);
-  setTimeout(() => {
-    (formProject.value ? formStudent : formProject).focus();
-  }, 280);
 }
 
 function closeUploadModal() {
@@ -273,192 +223,203 @@ function closeUploadModal() {
 }
 
 function resetUploadForm() {
-  uploadForm.reset();
-  fileSelectedName.textContent = '';
-  fileDropZone.classList.remove('drag-over');
+  if (uploadForm) uploadForm.reset();
+  if (fileSelectedName) fileSelectedName.textContent = '';
   hideProgress();
   setSubmitting(false);
 }
 
-uploadModalClose.addEventListener('click', closeUploadModal);
-uploadModalCancel.addEventListener('click', closeUploadModal);
+if (uploadModalClose) uploadModalClose.addEventListener('click', closeUploadModal);
+if (uploadModalCancel) uploadModalCancel.addEventListener('click', closeUploadModal);
 
-$('#btn-open-upload-header').addEventListener('click', () => openUploadModal());
-$('#btn-open-upload-deliverables').addEventListener('click', () => openUploadModal());
+const openHeaderBtn = $('#btn-open-upload-header') || $('#openUploadBtn');
+if (openHeaderBtn) openHeaderBtn.addEventListener('click', () => openUploadModal());
 
-// ── Drag & drop ───────────────────────────────────────────────────────────────
-fileDropZone.addEventListener('dragover', (e) => { e.preventDefault(); fileDropZone.classList.add('drag-over'); });
-fileDropZone.addEventListener('dragleave', () => fileDropZone.classList.remove('drag-over'));
-fileDropZone.addEventListener('drop', (e) => {
-  e.preventDefault();
-  fileDropZone.classList.remove('drag-over');
-  const file = e.dataTransfer.files[0];
-  if (file) {
-    const dt = new DataTransfer();
-    dt.items.add(file);
-    formFile.files = dt.files;
-    showSelectedFile(file);
-  }
-});
+if (fileDropZone) {
+  fileDropZone.addEventListener('dragover', (e) => { e.preventDefault(); fileDropZone.classList.add('drag-over'); });
+  fileDropZone.addEventListener('dragleave', () => fileDropZone.classList.remove('drag-over'));
+  fileDropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    fileDropZone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && formFile) {
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      formFile.files = dt.files;
+      showSelectedFile(file);
+    }
+  });
+}
 
-formFile.addEventListener('change', () => {
-  if (formFile.files[0]) showSelectedFile(formFile.files[0]);
-});
+if (formFile) {
+  formFile.addEventListener('change', () => {
+    if (formFile.files[0]) showSelectedFile(formFile.files[0]);
+  });
+}
 
 function showSelectedFile(file) {
   const mb = (file.size / 1048576).toFixed(2);
-  fileSelectedName.textContent = `📎 ${file.name} (${mb} MB)`;
+  if (fileSelectedName) fileSelectedName.textContent = `📎 ${file.name} (${mb} MB)`;
 }
 
-// ── Progress bar ──────────────────────────────────────────────────────────────
 function showProgress() {
-  uploadProgress.classList.add('visible');
-  progressFill.style.width = '0%';
+  if (uploadProgress) uploadProgress.classList.add('visible');
+  if (progressFill) progressFill.style.width = '0%';
   let pct = 0;
   progressInterval = setInterval(() => {
-    if (pct < 82) { pct += Math.random() * 9; progressFill.style.width = Math.min(pct, 82) + '%'; }
-  }, 220);
+    if (pct < 85) { pct += 10; if (progressFill) progressFill.style.width = pct + '%'; }
+  }, 150);
 }
 
 function completeProgress() {
   clearInterval(progressInterval);
-  progressFill.style.width = '100%';
-  progressLabel.textContent = '¡Entrega registrada exitosamente!';
-  setTimeout(hideProgress, 1100);
+  if (progressFill) progressFill.style.width = '100%';
+  setTimeout(hideProgress, 800);
 }
 
 function hideProgress() {
   clearInterval(progressInterval);
-  uploadProgress.classList.remove('visible');
-  progressFill.style.width = '0%';
-  progressLabel.textContent = 'Subiendo archivo…';
+  if (uploadProgress) uploadProgress.classList.remove('visible');
 }
 
 function setSubmitting(state) {
   isUploading = state;
-  submitBtn.disabled = state;
-  submitText.textContent = state ? 'Registrando…' : 'Registrar entrega';
-  submitIcon.textContent = state ? '⏳' : '📤';
+  if (submitBtn) submitBtn.disabled = state;
+  if (submitText) submitText.textContent = state ? 'Registrando…' : 'Registrar entrega';
 }
 
-// ── Envío del formulario ──────────────────────────────────────────────────────
-uploadForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  if (isUploading) return;
+// Envío del formulario
+if (uploadForm) {
+  uploadForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (isUploading) return;
 
-  const projectId   = formProject.value.trim();
-  const studentName = formStudent.value.trim();
-  const title       = formTitle.value.trim();
-  const file        = formFile.files[0];
+    const projectId   = formProject ? formProject.value.trim() : '';
+    const studentName = formStudent ? formStudent.value.trim() : '';
+    const title       = formTitle ? formTitle.value.trim() : '';
+    const file        = formFile && formFile.files ? formFile.files[0] : null;
 
-  if (!projectId)   { showToast('Seleccione un anteproyecto.', 'error'); formProject.focus(); return; }
-  if (!studentName) { showToast('Ingrese el nombre del estudiante.', 'error'); formStudent.focus(); return; }
-  if (!title)       { showToast('Ingrese el título de la entrega.', 'error'); formTitle.focus(); return; }
-  if (!file)        { showToast('Seleccione un archivo.', 'error'); return; }
-  if (file.size > 50 * 1048576) { showToast('El archivo supera el límite de 50 MB.', 'error'); return; }
+    if (!projectId)   { showToast('Seleccione un anteproyecto.', 'error'); return; }
+    if (!studentName) { showToast('Ingrese el nombre del estudiante.', 'error'); return; }
+    if (!title)       { showToast('Ingrese el título de la entrega.', 'error'); return; }
+    if (!file)        { showToast('Seleccione un archivo.', 'error'); return; }
 
-  setSubmitting(true);
-  showProgress();
+    setSubmitting(true);
+    showProgress();
 
-  const fd = new FormData();
-  fd.append('projectId',   projectId);
-  fd.append('studentName', studentName);
-  fd.append('title',       title);
-  fd.append('comments',    formComments.value.trim());
-  fd.append('file',        file);
+    // Crear URL de objeto para previsualizar/descargar en el navegador
+    const fileUrl = URL.createObjectURL(file);
 
-  try {
-    const res  = await fetch('/api/deliverables/upload', { method: 'POST', body: fd });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
-
-    completeProgress();
-    allDeliverables.push(data);
-    updateDeliverableStat();
-    renderDeliverables();
+    const newDeliverable = {
+      id: 'del-' + Date.now(),
+      projectId: projectId,
+      studentName: studentName,
+      title: title,
+      comments: formComments ? formComments.value.trim() : '',
+      filename: file.name,
+      filePath: fileUrl,
+      sizeBytes: file.size,
+      uploadDate: new Date().toISOString()
+    };
 
     setTimeout(() => {
-      closeUploadModal();
-      showToast(`Entrega de «${studentName}» registrada correctamente.`, 'success');
-    }, 700);
-  } catch (err) {
-    hideProgress();
-    setSubmitting(false);
-    showToast('Error al registrar la entrega: ' + err.message, 'error');
-  }
-});
+      completeProgress();
+      allDeliverables.unshift(newDeliverable);
+
+      // Guardar en localStorage
+      try {
+        const saved = JSON.parse(localStorage.getItem('abp_deliverables') || '[]');
+        saved.unshift(newDeliverable);
+        localStorage.setItem('abp_deliverables', JSON.stringify(saved));
+      } catch (e) {}
+
+      updateDeliverableStat();
+      renderDeliverables();
+
+      setTimeout(() => {
+        closeUploadModal();
+        showToast(`Entrega de «${studentName}» registrada correctamente.`, 'success');
+      }, 500);
+    }, 600);
+  });
+}
 
 // ══════════════════════════════════════════════════════════════════════════════
-// MODAL — PREVISUALIZADOR DE ARCHIVOS
+// PREVISUALIZADOR DE ARCHIVOS
 // ══════════════════════════════════════════════════════════════════════════════
 function openPreviewModal(deliverable) {
+  if (!previewContainer) return;
   previewFilename.textContent = deliverable.filename;
   previewStudent.textContent  = `${deliverable.studentName} · ${deliverable.title}`;
   previewDownloadLink.href     = deliverable.filePath;
   previewDownloadLink.download = deliverable.filename;
 
   previewContainer.innerHTML = '';
-
   const type = getFileType(deliverable.filename);
 
   if (type === 'image') {
-    const img = document.createElement('img');
-    img.className = 'preview-img';
-    img.src = deliverable.filePath;
-    img.alt = `Visualización de ${deliverable.filename}`;
-    previewContainer.appendChild(img);
-
+    previewContainer.innerHTML = `<img src="${deliverable.filePath}" class="preview-img" style="max-width:100%;max-height:70vh;border-radius:8px;" alt="Vista previa">`;
   } else if (type === 'pdf') {
-    const iframe = document.createElement('iframe');
-    iframe.className = 'preview-iframe';
-    iframe.src = deliverable.filePath;
-    iframe.title = `PDF: ${deliverable.filename}`;
-    iframe.setAttribute('allow', 'fullscreen');
-    previewContainer.appendChild(iframe);
-
+    previewContainer.innerHTML = `<iframe src="${deliverable.filePath}" style="width:100%;height:70vh;border:none;border-radius:8px;" title="PDF"></iframe>`;
   } else {
-    // Intenta con iframe de todas formas; algunos navegadores muestran xlsx, pptx, etc.
-    // mediante descarga o vista previa nativa del SO
     previewContainer.innerHTML = `
-      <div class="preview-unsupported">
-        <div style="font-size:3rem;margin-bottom:.75rem">📄</div>
-        <p>Este tipo de archivo no admite previsualización directa en el navegador.</p>
-        <a href="${esc(deliverable.filePath)}" download="${esc(deliverable.filename)}" class="btn btn-primary btn-sm">
-          ⬇ Descargar «${esc(deliverable.filename)}»
+      <div style="text-align:center;padding:40px 20px;">
+        <div style="font-size:3rem;margin-bottom:12px;">📄</div>
+        <p style="margin-bottom:16px;color:#64748b;">Este tipo de archivo (${deliverable.filename}) se abre mediante descarga directa.</p>
+        <a href="${deliverable.filePath}" download="${deliverable.filename}" class="btn btn-primary">
+          ⬇ Descargar «${deliverable.filename}»
         </a>
       </div>`;
   }
 
   openBackdrop(previewBackdrop);
-  setTimeout(() => previewModalClose.focus(), 280);
 }
 
 function closePreviewModal() {
-  // Limpiar iframe para detener carga de PDF
-  previewContainer.innerHTML = '';
+  if (previewContainer) previewContainer.innerHTML = '';
   closeBackdrop(previewBackdrop);
 }
-
-previewModalClose.addEventListener('click', closePreviewModal);
+if (previewModalClose) previewModalClose.addEventListener('click', closePreviewModal);
 
 // ══════════════════════════════════════════════════════════════════════════════
-// CARGAR PROYECTOS
+// CARGAR PROYECTOS Y ENTREGAS (100% Estático desde JSON)
 // ══════════════════════════════════════════════════════════════════════════════
 async function loadProjects() {
   try {
-    const res = await fetch('/api/projects');
+    const res = await fetch('./projects.json');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     allProjects = await res.json();
     renderProjects(filterProjects());
     populateSelects(allProjects);
   } catch (err) {
-    projectsGrid.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">⚠️</div>
-        <div class="empty-title">Error al cargar los anteproyectos</div>
-        <div class="empty-sub">${esc(err.message)}</div>
-      </div>`;
-    showToast('No se pudieron cargar los anteproyectos: ' + err.message, 'error');
+    if (projectsGrid) {
+      projectsGrid.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">⚠️</div>
+          <div class="empty-title">Error al cargar los anteproyectos</div>
+          <div class="empty-sub">${esc(err.message)}</div>
+        </div>`;
+    }
+  }
+}
+
+async function loadDeliverables() {
+  try {
+    let savedLocal = [];
+    try { savedLocal = JSON.parse(localStorage.getItem('abp_deliverables') || '[]'); } catch(e){}
+
+    let resData = [];
+    try {
+      const res = await fetch('./deliverables.json');
+      if (res.ok) resData = await res.json();
+    } catch(e) {}
+
+    allDeliverables = [...savedLocal, ...resData];
+    updateDeliverableStat();
+    renderDeliverables();
+  } catch (err) {
+    allDeliverables = [];
+    renderDeliverables();
   }
 }
 
@@ -469,171 +430,103 @@ function filterProjects() {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// RENDERIZAR TARJETAS DE PROYECTOS
+// RENDERIZAR TARJETAS Y TABLA
 // ══════════════════════════════════════════════════════════════════════════════
 function renderProjects(projects) {
+  if (!projectsGrid) return;
   if (!projects.length) {
-    projectsGrid.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">🔍</div>
-        <div class="empty-title">Sin anteproyectos para este filtro</div>
-        <div class="empty-sub">Seleccione otro nivel o «Todos» para ver todos los anteproyectos.</div>
-      </div>`;
+    projectsGrid.innerHTML = `<div class="empty-state"><p>Sin anteproyectos para este nivel.</p></div>`;
     return;
   }
 
-  projectsGrid.innerHTML = projects.map(p => buildProjectCard(p)).join('');
+  projectsGrid.innerHTML = projects.map(p => `
+    <article class="project-card" style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;">
+      <div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px;">
+          <span class="badge" style="background:#eff6ff;color:#2563eb;font-weight:700;font-size:0.75rem;padding:4px 10px;border-radius:12px;">🏫 ${esc(p.level)}</span>
+          <span class="badge" style="background:#dcfce7;color:#166534;font-weight:700;font-size:0.75rem;padding:4px 10px;border-radius:12px;">💰 $0</span>
+        </div>
+        <h3 style="font-size:1.1rem;font-weight:700;color:#0f172a;margin-bottom:8px;">${esc(p.title)}</h3>
+        <p style="font-size:0.85rem;color:#64748b;margin-bottom:12px;">📖 ${esc(p.subjects)}</p>
+        <blockquote style="font-size:0.88rem;font-style:italic;background:#f8fafc;padding:10px;border-left:3px solid #2563eb;margin-bottom:12px;">${esc(p.challenge)}</blockquote>
+        <div style="font-size:0.85rem;font-weight:600;color:#0f172a;margin-bottom:16px;">🎯 Producto: ${esc(p.product)}</div>
+      </div>
+      <div style="display:flex;gap:8px;padding-top:12px;border-top:1px solid #e2e8f0;">
+        <button class="btn btn-secondary card-guide-btn" data-id="${esc(p.id)}" style="flex:1;font-size:0.82rem;padding:8px;">📘 Guía y Avances</button>
+        <button class="btn btn-primary card-upload-btn" data-id="${esc(p.id)}" style="flex:1;font-size:0.82rem;padding:8px;">📤 Subir Entrega</button>
+      </div>
+    </article>
+  `).join('');
 
-  // Botón de guía
-  $$('.card-guide-btn').forEach(btn => {
+  $$('.card-guide-btn', projectsGrid).forEach(btn => {
     btn.addEventListener('click', () => {
-      const proj = allProjects.find(p => p.id === btn.dataset.projectId);
+      const proj = allProjects.find(p => p.id === btn.dataset.id);
       if (proj) openGuideModal(proj);
     });
   });
 
-  // Botón de subida
-  $$('.card-upload-btn').forEach(btn => {
-    btn.addEventListener('click', () => openUploadModal(btn.dataset.projectId));
+  $$('.card-upload-btn', projectsGrid).forEach(btn => {
+    btn.addEventListener('click', () => openUploadModal(btn.dataset.id));
   });
-}
-
-function buildProjectCard(p) {
-  return `
-    <article class="project-card" role="listitem" data-project-id="${esc(p.id)}">
-      <div class="card-stripe" aria-hidden="true"></div>
-      <div class="card-body">
-        <div class="card-meta-row">
-          <span class="badge badge-level">🏫 ${esc(p.level)}</span>
-          <span class="badge badge-cost">💰 $0</span>
-        </div>
-        <h3 class="card-title">${esc(p.title)}</h3>
-        <p class="card-subject">
-          <span aria-hidden="true">📖</span>
-          ${esc(p.subjects)}
-        </p>
-        <blockquote class="card-challenge">
-          <p>${esc(p.challenge)}</p>
-        </blockquote>
-        <div>
-          <div class="card-product-label">Producto final</div>
-          <div class="card-product">🎯 ${esc(p.product)}</div>
-        </div>
-      </div>
-      <div class="card-footer">
-        <button
-          class="btn btn-secondary btn-sm card-guide-btn"
-          data-project-id="${esc(p.id)}"
-          aria-label="Ver guía y avances de ${esc(p.title)}"
-          id="guide-btn-${esc(p.id)}"
-        >
-          📘 Ver Guía y Avances
-        </button>
-        <button
-          class="btn btn-primary btn-sm card-upload-btn"
-          data-project-id="${esc(p.id)}"
-          aria-label="Subir entrega para ${esc(p.title)}"
-          id="upload-btn-${esc(p.id)}"
-        >
-          📤 Subir Entrega
-        </button>
-      </div>
-    </article>`;
-}
-
-// ══════════════════════════════════════════════════════════════════════════════
-// PESTAÑAS DE FILTRO DE PROYECTOS
-// ══════════════════════════════════════════════════════════════════════════════
-$$('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    activeFilter = btn.dataset.filter;
-    $$('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-    btn.classList.add('active');
-    btn.setAttribute('aria-selected','true');
-    renderProjects(filterProjects());
-  });
-});
-
-// ══════════════════════════════════════════════════════════════════════════════
-// CARGAR ENTREGAS
-// ══════════════════════════════════════════════════════════════════════════════
-async function loadDeliverables() {
-  try {
-    const res = await fetch('/api/deliverables');
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    allDeliverables = await res.json();
-    updateDeliverableStat();
-    renderDeliverables();
-  } catch (err) {
-    deliverablesContainer.innerHTML = `
-      <div class="deliverables-table-wrapper">
-        <div class="empty-state">
-          <div class="empty-icon">⚠️</div>
-          <div class="empty-title">Error al cargar las entregas</div>
-          <div class="empty-sub">${esc(err.message)}</div>
-        </div>
-      </div>`;
-    showToast('No se pudieron cargar las entregas: ' + err.message, 'error');
-  }
 }
 
 function updateDeliverableStat() {
   if (statDeliverables) statDeliverables.textContent = allDeliverables.length;
 }
 
-// ══════════════════════════════════════════════════════════════════════════════
-// RENDERIZAR TABLA DE ENTREGAS
-// ══════════════════════════════════════════════════════════════════════════════
-function getFilteredDeliverables() {
-  return allDeliverables.filter(d => {
-    const matchProject = delivFilter === 'all' || d.projectId === delivFilter;
-    const matchSearch  = !searchQuery ||
-      d.studentName.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchProject && matchSearch;
-  });
-}
-
 function renderDeliverables() {
-  const filtered = getFilteredDeliverables();
-  deliverablesCount.textContent = `${filtered.length} entrega${filtered.length !== 1 ? 's' : ''}`;
+  if (!deliverablesContainer) return;
+
+  const filtered = allDeliverables.filter(d => {
+    const matchProj = delivFilter === 'all' || d.projectId === delivFilter;
+    const matchSearch = !searchQuery || d.studentName.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchProj && matchSearch;
+  });
+
+  if (deliverablesCount) deliverablesCount.textContent = `${filtered.length} entrega${filtered.length !== 1 ? 's' : ''}`;
 
   if (!filtered.length) {
-    const msg = searchQuery
-      ? `No se encontraron entregas para «${esc(searchQuery)}».`
-      : (delivFilter !== 'all'
-          ? 'Sin entregas para este anteproyecto.'
-          : 'Aún no se han registrado entregas.');
-    deliverablesContainer.innerHTML = `
-      <div class="deliverables-table-wrapper">
-        <div class="empty-state">
-          <div class="empty-icon">📭</div>
-          <div class="empty-title">${msg}</div>
-          <div class="empty-sub">Utilice el botón «Subir Entrega» para registrar la primera.</div>
-        </div>
-      </div>`;
+    deliverablesContainer.innerHTML = `<div class="empty-state" style="padding:30px;text-align:center;color:#64748b;"><p>Aún no hay entregas registradas para este filtro.</p></div>`;
     return;
   }
 
-  const rows = filtered.map(d => buildDeliverableRow(d)).join('');
+  const rows = filtered.map(d => {
+    const proj = allProjects.find(p => p.id === d.projectId);
+    const level = proj ? proj.level : d.projectId;
+    return `
+      <tr style="border-bottom:1px solid #e2e8f0;">
+        <td style="padding:12px;font-weight:600;color:#0f172a;">${esc(d.studentName)}</td>
+        <td style="padding:12px;">${esc(d.title)}</td>
+        <td style="padding:12px;"><span style="background:#e2e8f0;padding:2px 8px;border-radius:10px;font-size:0.75rem;">${esc(level)}</span></td>
+        <td style="padding:12px;color:#64748b;">${esc(d.comments || '—')}</td>
+        <td style="padding:12px;font-size:0.8rem;">${formatBytes(d.sizeBytes)}</td>
+        <td style="padding:12px;font-size:0.8rem;color:#64748b;">${formatDate(d.uploadDate)}</td>
+        <td style="padding:12px;">
+          <button class="preview-btn" data-id="${esc(d.id)}" style="background:none;border:none;cursor:pointer;font-size:1.1rem;" title="Visualizar">👁️</button>
+          <a href="${esc(d.filePath)}" download="${esc(d.filename)}" style="text-decoration:none;font-size:1.1rem;margin:0 6px;" title="Descargar">⬇️</a>
+          <button class="delete-btn" data-id="${esc(d.id)}" style="background:none;border:none;cursor:pointer;font-size:1.1rem;" title="Eliminar">🗑️</button>
+        </td>
+      </tr>`;
+  }).join('');
+
   deliverablesContainer.innerHTML = `
-    <div class="deliverables-table-wrapper">
-      <table class="deliverables-table" aria-label="Tabla de entregas de estudiantes">
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;text-align:left;">
         <thead>
-          <tr>
-            <th scope="col">Estudiante</th>
-            <th scope="col">Título de entrega</th>
-            <th scope="col">Anteproyecto</th>
-            <th scope="col">Observaciones</th>
-            <th scope="col">Tamaño</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Acciones</th>
+          <tr style="background:#f8fafc;border-bottom:2px solid #e2e8f0;font-size:0.82rem;color:#64748b;">
+            <th style="padding:10px;">Estudiante</th>
+            <th style="padding:10px;">Título</th>
+            <th style="padding:10px;">Anteproyecto</th>
+            <th style="padding:10px;">Comentarios</th>
+            <th style="padding:10px;">Tamaño</th>
+            <th style="padding:10px;">Fecha</th>
+            <th style="padding:10px;">Acciones</th>
           </tr>
         </thead>
         <tbody>${rows}</tbody>
       </table>
     </div>`;
 
-  // Eventos en botones
   $$('.preview-btn', deliverablesContainer).forEach(btn => {
     btn.addEventListener('click', () => {
       const d = allDeliverables.find(x => x.id === btn.dataset.id);
@@ -641,97 +534,49 @@ function renderDeliverables() {
     });
   });
 
-  $$('.download-btn', deliverablesContainer).forEach(btn => {
-    // Es un <a>, no necesita JS adicional
-  });
-
   $$('.delete-btn', deliverablesContainer).forEach(btn => {
-    btn.addEventListener('click', () => deleteDeliverable(btn.dataset.id, btn.dataset.title));
+    btn.addEventListener('click', () => {
+      if (confirm('¿Eliminar esta entrega?')) {
+        allDeliverables = allDeliverables.filter(x => x.id !== btn.dataset.id);
+        try { localStorage.setItem('abp_deliverables', JSON.stringify(allDeliverables)); } catch(e){}
+        updateDeliverableStat();
+        renderDeliverables();
+        showToast('Entrega eliminada.', 'info');
+      }
+    });
   });
 }
 
-function buildDeliverableRow(d) {
-  const project = allProjects.find(p => p.id === d.projectId);
-  const level   = project ? project.level : d.projectId;
-  return `
-    <tr>
-      <td class="td-student">${esc(d.studentName)}</td>
-      <td class="td-title" title="${esc(d.title)}">${esc(d.title)}</td>
-      <td><span class="badge badge-level" style="font-size:.66rem;">${esc(level)}</span></td>
-      <td class="td-comment" title="${esc(d.comments || '')}">${esc(d.comments || '—')}</td>
-      <td class="td-size">${formatBytes(d.sizeBytes)}</td>
-      <td class="td-date">${formatDate(d.uploadDate)}</td>
-      <td class="td-actions">
-        <button
-          class="btn-icon-round preview preview-btn"
-          data-id="${esc(d.id)}"
-          title="Visualizar ${esc(d.filename)}"
-          aria-label="Visualizar archivo ${esc(d.filename)}"
-        >👁️</button>
-        <a
-          href="${esc(d.filePath)}"
-          download="${esc(d.filename)}"
-          class="btn-icon-round download-btn"
-          title="Descargar ${esc(d.filename)}"
-          aria-label="Descargar archivo ${esc(d.filename)}"
-        >⬇</a>
-        <button
-          class="btn-icon-round danger delete-btn"
-          data-id="${esc(d.id)}"
-          data-title="${esc(d.title)}"
-          title="Eliminar entrega"
-          aria-label="Eliminar entrega ${esc(d.title)}"
-        >🗑</button>
-      </td>
-    </tr>`;
-}
-
-// ══════════════════════════════════════════════════════════════════════════════
-// FILTRO Y BÚSQUEDA EN ENTREGAS
-// ══════════════════════════════════════════════════════════════════════════════
-filterDeliverables.addEventListener('change', () => {
-  delivFilter = filterDeliverables.value;
-  renderDeliverables();
+// Pestañas de Filtro
+$$('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    activeFilter = btn.dataset.filter || 'all';
+    $$('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderProjects(filterProjects());
+  });
 });
 
-searchInput.addEventListener('input', () => {
-  searchQuery = searchInput.value.trim();
-  renderDeliverables();
-});
-
-// ══════════════════════════════════════════════════════════════════════════════
-// POBLAR SELECTS
-// ══════════════════════════════════════════════════════════════════════════════
-function populateSelects(projects) {
-  const opts = projects.map(p =>
-    `<option value="${esc(p.id)}">${esc(p.level)} — ${esc(p.title)}</option>`
-  ).join('');
-
-  formProject.innerHTML      = '<option value="">— Seleccione un anteproyecto —</option>' + opts;
-  filterDeliverables.innerHTML = '<option value="all">Todos los anteproyectos</option>' +
-    projects.map(p => `<option value="${esc(p.id)}">${esc(p.level)}</option>`).join('');
-}
-
-// ══════════════════════════════════════════════════════════════════════════════
-// ELIMINAR ENTREGA
-// ══════════════════════════════════════════════════════════════════════════════
-async function deleteDeliverable(id, title) {
-  const ok = window.confirm(
-    `¿Confirma la eliminación de la entrega «${title}»?\n\nEsta acción también eliminará el archivo del servidor y no puede deshacerse.`
-  );
-  if (!ok) return;
-
-  try {
-    const res  = await fetch(`/api/deliverables/${encodeURIComponent(id)}`, { method: 'DELETE' });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
-
-    allDeliverables = allDeliverables.filter(d => d.id !== id);
-    updateDeliverableStat();
+if (filterDeliverables) {
+  filterDeliverables.addEventListener('change', () => {
+    delivFilter = filterDeliverables.value;
     renderDeliverables();
-    showToast(`Entrega «${title}» eliminada correctamente.`, 'info');
-  } catch (err) {
-    showToast('Error al eliminar la entrega: ' + err.message, 'error');
+  });
+}
+
+if (searchInput) {
+  searchInput.addEventListener('input', () => {
+    searchQuery = searchInput.value.trim();
+    renderDeliverables();
+  });
+}
+
+function populateSelects(projects) {
+  const opts = projects.map(p => `<option value="${esc(p.id)}">${esc(p.level)} — ${esc(p.title)}</option>`).join('');
+  if (formProject) formProject.innerHTML = '<option value="">— Seleccione un anteproyecto —</option>' + opts;
+  if (filterDeliverables) {
+    filterDeliverables.innerHTML = '<option value="all">Todos los anteproyectos</option>' +
+      projects.map(p => `<option value="${esc(p.id)}">${esc(p.level)}</option>`).join('');
   }
 }
 
