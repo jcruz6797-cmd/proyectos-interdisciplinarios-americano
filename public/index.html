@@ -3,86 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Portal de Gestión de Anteproyectos Interdisciplinarios ABP — Unidad Educativa Particular Americano. Administración de entregas, cronogramas y rúbricas de evaluación por nivel educativo." />
-  <title>Portal ABP — UE Particular «Americano»</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏫</text></svg>" />
+  <meta name="description" content="Portal de Proyectos Interdisciplinarios ABP — Unidad Educativa Particular Americano. Propuesta de Aprendizaje Basado en Proyectos integrando Matemáticas, Informática, Robótica y Emprendimiento." />
+  <title>Proyectos Interdisciplinarios ABP — UE Americano</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- ══════════════════════════════════════════════════════
-       CABECERA INSTITUCIONAL CLARA
-  ══════════════════════════════════════════════════════ -->
-  <header class="header" role="banner">
+  <!-- ══════════════════════════════════════
+       CABECERA INSTITUCIONAL
+  ══════════════════════════════════════ -->
+  <header class="site-header" role="banner">
     <div class="header-inner">
       <div class="header-brand">
-        <div class="brand-emblem" aria-hidden="true">🏫</div>
-        <div class="brand-text">
-          <div class="brand-school">UE Particular «Americano»</div>
-          <div class="brand-portal">Portal de Gestión de Anteproyectos Interdisciplinarios (ABP)</div>
-          <div class="brand-teachers">Lic. Josué Cruz &amp; Ing. Ángela Vinces</div>
+        <div class="brand-logo" aria-hidden="true">🏛</div>
+        <div class="brand-info">
+          <div class="brand-institution">Unidad Educativa Particular «Americano»</div>
+          <div class="brand-subtitle">Portal de Proyectos Interdisciplinarios · ABP 2024–2025</div>
         </div>
       </div>
-      <button id="btn-open-upload-header" class="btn btn-primary" aria-label="Abrir formulario de subida de entrega">
-        📤 Subir Entrega
+      <button id="btn-open-upload-header" class="btn btn-primary" aria-label="Registrar entrega de estudiante">
+        <span aria-hidden="true">📤</span> Registrar Entrega
       </button>
     </div>
   </header>
 
-  <!-- ══════════════════════════════════════════════════════
-       BANNER HERO CLARO
-  ══════════════════════════════════════════════════════ -->
-  <section class="hero" aria-label="Resumen académico del programa">
+  <!-- ══════════════════════════════════════
+       HERO — PRESENTACIÓN
+  ══════════════════════════════════════ -->
+  <section class="hero" aria-labelledby="hero-heading">
     <div class="hero-inner">
-      <div class="hero-left">
-        <div class="hero-tag">
+      <div class="hero-text">
+        <div class="hero-badge">
           <span aria-hidden="true">📚</span>
           Aprendizaje Basado en Proyectos · Período 2024–2025
         </div>
-        <h1 class="hero-title">
-          Anteproyectos <span>Interdisciplinarios</span><br />
-          de Matemáticas Aplicadas
+        <h1 class="hero-title" id="hero-heading">
+          Proyectos Interdisciplinarios<br>
+          <span class="hero-accent">de Matemáticas Aplicadas</span>
         </h1>
         <p class="hero-desc">
-          Cinco propuestas académicas que integran Matemáticas con Informática, Robótica y Emprendimiento,
-          diseñadas para el desarrollo de destrezas con criterio de desempeño (DCD) establecidas por el
-          Ministerio de Educación del Ecuador.
+          Cinco propuestas académicas que integran <strong>Matemáticas</strong> con <strong>Informática</strong>,
+          <strong>Robótica</strong> y <strong>Emprendimiento</strong>, diseñadas para el desarrollo de destrezas
+          con criterio de desempeño (DCD) del Ministerio de Educación del Ecuador.
         </p>
+        <div class="hero-teachers">
+          <span class="teacher-chip">👨‍🏫 Lic. Josué Cruz — Matemáticas</span>
+          <span class="teacher-chip">👩‍💻 Ing. Ángela Vinces — Informática / Robótica</span>
+        </div>
       </div>
-      <div class="hero-stats" role="list" aria-label="Estadísticas del programa">
-        <div class="stat-box" role="listitem">
-          <div class="stat-num blue" id="stat-projects">5</div>
-          <div class="stat-lbl">Anteproyectos ABP</div>
+      <div class="hero-stats" role="list" aria-label="Indicadores del programa">
+        <div class="stat-card" role="listitem">
+          <div class="stat-value" id="stat-projects">5</div>
+          <div class="stat-label">Anteproyectos</div>
         </div>
-        <div class="stat-box" role="listitem">
-          <div class="stat-num amber">4</div>
-          <div class="stat-lbl">Semanas de trabajo</div>
+        <div class="stat-card" role="listitem">
+          <div class="stat-value">≈280</div>
+          <div class="stat-label">Estudiantes</div>
         </div>
-        <div class="stat-box" role="listitem">
-          <div class="stat-num green">$0</div>
-          <div class="stat-lbl">Presupuesto</div>
+        <div class="stat-card" role="listitem">
+          <div class="stat-value">5</div>
+          <div class="stat-label">Niveles escolares</div>
         </div>
-        <div class="stat-box" role="listitem">
-          <div class="stat-num blue" id="stat-deliverables">0</div>
-          <div class="stat-lbl">Entregas recibidas</div>
+        <div class="stat-card" role="listitem">
+          <div class="stat-value">4</div>
+          <div class="stat-label">Semanas de trabajo</div>
+        </div>
+        <div class="stat-card" role="listitem">
+          <div class="stat-value" id="stat-deliverables">0</div>
+          <div class="stat-label">Entregas recibidas</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════
-       CONTENIDO PRINCIPAL
-  ══════════════════════════════════════════════════════ -->
-  <main class="main" id="main-content">
+  <!-- ══════════════════════════════════════
+       ASIGNATURAS PARTICIPANTES
+  ══════════════════════════════════════ -->
+  <section class="subjects-bar" aria-label="Asignaturas participantes en el programa ABP">
+    <div class="subjects-inner">
+      <div class="subject-pill math">
+        <span class="subject-icon" aria-hidden="true">📐</span>
+        <span>Matemáticas</span>
+      </div>
+      <div class="subject-arrow" aria-hidden="true">+</div>
+      <div class="subject-pill info">
+        <span class="subject-icon" aria-hidden="true">💻</span>
+        <span>Informática</span>
+      </div>
+      <div class="subject-arrow" aria-hidden="true">+</div>
+      <div class="subject-pill robo">
+        <span class="subject-icon" aria-hidden="true">🤖</span>
+        <span>Robótica</span>
+      </div>
+      <div class="subject-arrow" aria-hidden="true">+</div>
+      <div class="subject-pill empr">
+        <span class="subject-icon" aria-hidden="true">💼</span>
+        <span>Emprendimiento</span>
+      </div>
+      <div class="subject-result" aria-hidden="true">=</div>
+      <div class="subject-pill result">
+        <span class="subject-icon" aria-hidden="true">🎯</span>
+        <span>Producto Final</span>
+      </div>
+    </div>
+  </section>
 
-    <!-- ── Proyectos ──────────────────────────────────── -->
-    <section aria-labelledby="projects-heading">
+  <!-- ══════════════════════════════════════
+       CONTENIDO PRINCIPAL
+  ══════════════════════════════════════ -->
+  <main class="main-content" id="main-content">
+
+    <!-- ── SECCIÓN: Proyectos ───────────── -->
+    <section class="section" aria-labelledby="projects-heading">
       <div class="section-header">
-        <h2 class="section-title" id="projects-heading">Anteproyectos por nivel educativo</h2>
+        <h2 class="section-title" id="projects-heading">Anteproyectos por Nivel Educativo</h2>
+        <p class="section-desc">Seleccione un nivel o vea todos los proyectos del programa.</p>
       </div>
 
-      <!-- Pestañas de filtro -->
-      <nav class="tabs" role="tablist" aria-label="Filtrar anteproyectos por nivel">
+      <nav class="level-tabs" role="tablist" aria-label="Filtrar por nivel educativo">
         <button class="tab-btn active" role="tab" aria-selected="true"  data-filter="all"     id="tab-all">Todos</button>
         <button class="tab-btn"        role="tab" aria-selected="false" data-filter="8vo-egb" id="tab-8vo">8.º EGB</button>
         <button class="tab-btn"        role="tab" aria-selected="false" data-filter="9no-egb" id="tab-9no">9.º EGB</button>
@@ -91,85 +133,102 @@
         <button class="tab-btn"        role="tab" aria-selected="false" data-filter="3ro-bgu" id="tab-3ro">3.º BGU</button>
       </nav>
 
-      <!-- Grid de tarjetas -->
-      <div class="projects-grid" id="projects-grid" role="list" aria-label="Lista de anteproyectos">
-        <div class="empty-state" id="projects-loading">
-          <div class="empty-icon">⏳</div>
-          <div class="empty-title">Cargando anteproyectos…</div>
+      <div class="projects-grid" id="projects-grid" role="list" aria-label="Lista de anteproyectos ABP">
+        <div class="loading-state" id="projects-loading" role="status" aria-live="polite">
+          <div class="loading-spinner" aria-hidden="true"></div>
+          <p>Cargando anteproyectos…</p>
         </div>
       </div>
     </section>
 
-    <!-- ── Entregas ───────────────────────────────────── -->
-    <section class="deliverables-section" aria-labelledby="deliverables-heading">
+    <!-- ── SECCIÓN: Entregas ────────────── -->
+    <section class="section deliverables-section" aria-labelledby="deliverables-heading">
       <div class="section-header">
-        <h2 class="section-title" id="deliverables-heading">Entregas recibidas</h2>
-        <button id="btn-open-upload-deliverables" class="btn btn-secondary btn-sm" aria-label="Registrar nueva entrega">
-          📤 Nueva entrega
+        <div>
+          <h2 class="section-title" id="deliverables-heading">Registro de Entregas</h2>
+          <p class="section-desc">Archivos enviados por los estudiantes para evaluación docente.</p>
+        </div>
+        <button id="btn-open-upload-deliverables" class="btn btn-outline" aria-label="Registrar nueva entrega de estudiante">
+          <span aria-hidden="true">📤</span> Nueva Entrega
         </button>
       </div>
 
-      <!-- Barra de herramientas -->
       <div class="deliverables-toolbar">
-        <div class="search-box" role="search">
-          <span aria-hidden="true">🔍</span>
+        <div class="search-wrap" role="search">
+          <span class="search-icon" aria-hidden="true">🔍</span>
           <input
             type="search"
             id="search-student"
-            placeholder="Buscar por nombre de estudiante…"
+            placeholder="Buscar por nombre del estudiante…"
             aria-label="Buscar entregas por nombre de estudiante"
             autocomplete="off"
           />
         </div>
-        <label for="filter-deliverables" class="sr-only">Filtrar por proyecto</label>
-        <select id="filter-deliverables" class="filter-select" aria-label="Filtrar entregas por proyecto">
-          <option value="all">Todos los proyectos</option>
+        <label for="filter-deliverables" class="sr-only">Filtrar por anteproyecto</label>
+        <select id="filter-deliverables" class="filter-select" aria-label="Filtrar entregas por anteproyecto">
+          <option value="all">Todos los anteproyectos</option>
         </select>
-        <span class="deliverables-count" id="deliverables-count" aria-live="polite"></span>
+        <span class="deliverables-count-badge" id="deliverables-count" aria-live="polite"></span>
       </div>
 
       <div id="deliverables-container">
-        <div class="deliverables-table-wrapper">
-          <div class="empty-state" id="deliverables-empty">
-            <div class="empty-icon">📭</div>
-            <div class="empty-title">Aún no se han registrado entregas</div>
-            <div class="empty-sub">Utilice el botón «Subir Entrega» para registrar la primera.</div>
-          </div>
+        <div class="empty-state">
+          <div class="empty-icon" aria-hidden="true">📭</div>
+          <div class="empty-title">Aún no se han registrado entregas</div>
+          <div class="empty-sub">Use el botón «Registrar Entrega» para agregar la primera.</div>
         </div>
       </div>
     </section>
+
   </main>
 
-  <!-- ══════════════════════════════════════════════════════
-       MODAL — Guía y Avances del Anteproyecto
-  ══════════════════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div>
+        <strong>UE Particular «Americano»</strong> — Proyectos Interdisciplinarios ABP 2024–2025
+      </div>
+      <div class="footer-note">
+        Propuesta pedagógica · Matemáticas + Informática · Versión de presentación a Coordinación Académica
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════
+       MODAL — Detalle del Proyecto
+  ══════════════════════════════════════ -->
   <div class="modal-backdrop" id="guide-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="guide-modal-title">
-    <div class="modal modal-lg" id="guide-modal">
+    <div class="modal modal-wide" id="guide-modal">
       <div class="modal-header">
-        <div class="modal-title" id="guide-modal-title">
-          <span aria-hidden="true">📘</span>
+        <div class="modal-title-wrap" id="guide-modal-title">
+          <span class="modal-title-icon" aria-hidden="true">📘</span>
           <div>
-            <span id="guide-modal-level"></span>
-            <small id="guide-modal-subtitle"></small>
+            <div class="modal-title-main" id="guide-modal-level"></div>
+            <div class="modal-title-sub" id="guide-modal-subtitle"></div>
           </div>
         </div>
-        <button class="modal-close" id="guide-modal-close" aria-label="Cerrar guía del anteproyecto">✕</button>
+        <button class="modal-close" id="guide-modal-close" aria-label="Cerrar detalle del proyecto">✕</button>
       </div>
       <div class="modal-body" id="guide-modal-body">
-        <!-- Contenido generado dinámicamente -->
+        <!-- Contenido dinámico -->
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════
-       MODAL — Subir Entrega
-  ══════════════════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════
+       MODAL — Registrar Entrega
+  ══════════════════════════════════════ -->
   <div class="modal-backdrop" id="upload-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="upload-modal-title">
-    <div class="modal modal-sm" id="upload-modal">
+    <div class="modal modal-medium" id="upload-modal">
       <div class="modal-header">
-        <h3 class="modal-title" id="upload-modal-title">
-          <span aria-hidden="true">📤</span>
-          Registrar entrega de anteproyecto
+        <h3 class="modal-title-wrap" id="upload-modal-title">
+          <span class="modal-title-icon" aria-hidden="true">📤</span>
+          <div>
+            <div class="modal-title-main">Registrar Entrega</div>
+            <div class="modal-title-sub">Complete el formulario y adjunte el archivo del estudiante</div>
+          </div>
         </h3>
         <button class="modal-close" id="upload-modal-close" aria-label="Cerrar formulario de entrega">✕</button>
       </div>
@@ -177,81 +236,49 @@
       <form id="upload-form" novalidate>
         <div class="modal-body">
 
-          <div class="form-group">
-            <label class="form-label" for="form-project">
-              Anteproyecto <span aria-hidden="true">*</span>
-            </label>
-            <select class="form-control" id="form-project" name="projectId" required aria-required="true">
-              <option value="">— Seleccione un anteproyecto —</option>
-            </select>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="form-project">Anteproyecto <span class="required" aria-hidden="true">*</span></label>
+              <select class="form-control" id="form-project" name="projectId" required aria-required="true">
+                <option value="">— Seleccione un anteproyecto —</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="form-student">Nombre del Estudiante <span class="required" aria-hidden="true">*</span></label>
+              <input type="text" class="form-control" id="form-student" name="studentName"
+                placeholder="Ej.: María García Pérez" required aria-required="true" autocomplete="name" />
+            </div>
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="form-student">
-              Nombre del estudiante <span aria-hidden="true">*</span>
-            </label>
-            <input
-              type="text"
-              class="form-control"
-              id="form-student"
-              name="studentName"
-              placeholder="Ej.: María García"
-              required
-              aria-required="true"
-              autocomplete="name"
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="form-title">
-              Título de la entrega <span aria-hidden="true">*</span>
-            </label>
-            <input
-              type="text"
-              class="form-control"
-              id="form-title"
-              name="title"
-              placeholder="Ej.: Fase 2 — Diagramas de Venn"
-              required
-              aria-required="true"
-            />
+            <label class="form-label" for="form-title">Título de la Entrega <span class="required" aria-hidden="true">*</span></label>
+            <input type="text" class="form-control" id="form-title" name="title"
+              placeholder="Ej.: Fase 1 — Recolección de Datos" required aria-required="true" />
           </div>
 
           <div class="form-group">
             <label class="form-label" for="form-comments">Observaciones</label>
-            <textarea
-              class="form-control"
-              id="form-comments"
-              name="comments"
-              rows="2"
-              placeholder="Comentarios del docente o del estudiante…"
-            ></textarea>
+            <textarea class="form-control" id="form-comments" name="comments" rows="2"
+              placeholder="Comentarios adicionales del estudiante o docente…"></textarea>
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="form-file">
-              Archivo <span aria-hidden="true">*</span>
-            </label>
-            <div class="file-drop" id="file-drop-zone">
-              <input
-                type="file"
-                id="form-file"
-                name="file"
-                required
-                aria-required="true"
+            <label class="form-label" for="form-file">Archivo <span class="required" aria-hidden="true">*</span></label>
+            <div class="file-drop-area" id="file-drop-zone">
+              <input type="file" id="form-file" name="file" required aria-required="true"
                 aria-describedby="file-drop-help"
-              />
+                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.rar,.png,.jpg,.jpeg" />
               <div class="file-drop-icon" aria-hidden="true">📁</div>
-              <div class="file-drop-text">Arrastra tu archivo aquí o haz clic para seleccionarlo</div>
-              <div class="file-drop-sub" id="file-drop-help">PDF, DOCX, XLSX, PPTX, ZIP · Máximo 50 MB</div>
-              <div class="file-selected" id="file-selected-name" aria-live="polite"></div>
+              <div class="file-drop-label">Arrastra el archivo aquí o haz clic para seleccionarlo</div>
+              <div class="file-drop-types" id="file-drop-help">PDF · DOCX · XLSX · PPTX · ZIP · Máximo 50 MB</div>
+              <div class="file-selected-name" id="file-selected-name" aria-live="polite"></div>
             </div>
           </div>
 
           <div class="upload-progress" id="upload-progress" aria-live="polite">
-            <div class="progress-label" id="progress-label">Subiendo archivo…</div>
-            <div class="progress-wrap">
-              <div class="progress-fill" id="progress-fill"></div>
+            <div class="progress-label" id="progress-label">Registrando entrega…</div>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar-fill" id="progress-fill"></div>
             </div>
           </div>
 
@@ -259,42 +286,40 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-ghost" id="upload-modal-cancel">Cancelar</button>
-          <button type="submit" class="btn btn-primary" id="submit-btn" aria-label="Enviar entrega">
+          <button type="submit" class="btn btn-primary" id="submit-btn" aria-label="Registrar entrega">
             <span id="submit-icon" aria-hidden="true">📤</span>
-            <span id="submit-text">Registrar entrega</span>
+            <span id="submit-text">Registrar Entrega</span>
           </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════
-       MODAL — Previsualizador de archivos
-  ══════════════════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════
+       MODAL — Vista previa de archivo
+  ══════════════════════════════════════ -->
   <div class="modal-backdrop" id="preview-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="preview-modal-title">
-    <div class="modal modal-xl" id="preview-modal">
+    <div class="modal modal-xlarge" id="preview-modal">
       <div class="modal-header">
-        <h3 class="modal-title" id="preview-modal-title">
-          <span aria-hidden="true">👁️</span>
+        <h3 class="modal-title-wrap" id="preview-modal-title">
+          <span class="modal-title-icon" aria-hidden="true">👁</span>
           <div>
-            <span id="preview-modal-filename">Visualización de entrega</span>
-            <small id="preview-modal-student"></small>
+            <div class="modal-title-main" id="preview-modal-filename">Visualización de entrega</div>
+            <div class="modal-title-sub" id="preview-modal-student"></div>
           </div>
         </h3>
-        <div style="display:flex;gap:.5rem;align-items:center;">
-          <a id="preview-download-link" class="btn btn-secondary btn-sm" download aria-label="Descargar archivo">⬇ Descargar</a>
+        <div class="preview-actions">
+          <a id="preview-download-link" class="btn btn-outline btn-sm" download aria-label="Descargar archivo">⬇ Descargar</a>
           <button class="modal-close" id="preview-modal-close" aria-label="Cerrar visualización">✕</button>
         </div>
       </div>
-      <div class="modal-body" style="padding:.75rem 1rem;">
-        <div class="preview-container" id="preview-container" aria-label="Visualización del documento">
-          <!-- Contenido generado dinámicamente -->
-        </div>
+      <div class="modal-body preview-body">
+        <div class="preview-container" id="preview-container" aria-label="Visualización del documento"></div>
       </div>
     </div>
   </div>
 
-  <!-- Toast container -->
+  <!-- Notificaciones toast -->
   <div class="toast-container" id="toast-container" aria-live="assertive" aria-atomic="true"></div>
 
   <script src="app.js"></script>
