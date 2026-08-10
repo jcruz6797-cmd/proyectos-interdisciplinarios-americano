@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "outputDirectory": ".",
-  "buildCommand": null,
-  "installCommand": "npm install --production"
+  "framework": null,
+  "outputDirectory": "public"
 }
